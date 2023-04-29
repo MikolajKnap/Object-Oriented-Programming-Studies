@@ -1,5 +1,10 @@
 package mpk.pieniadz;
 
-abstract class Pieniadz {
-    protected double wartosc;
+public abstract class Pieniadz {
+    public double wartosc;
+
+    @Override
+    public String toString() {
+        return Double.toString(wartosc);
+    }
 }

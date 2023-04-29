@@ -6,13 +6,13 @@ public class Transakcja {
     private LocalDate data;
     private Bilet.Rodzaj rodzaj;
     private int liczbaBiletow;
-    private double dochod;
+    private double price;
 
-    public Transakcja(LocalDate data, Bilet.Rodzaj rodzaj, int liczbaBiletow, double dochod) {
+    public Transakcja(LocalDate data, Bilet.Rodzaj rodzaj, int liczbaBiletow, double price) {
         this.data = data;
         this.rodzaj = rodzaj;
         this.liczbaBiletow = liczbaBiletow;
-        this.dochod = dochod;
+        this.price = price;
     }
 
     public LocalDate getData() {
@@ -25,7 +25,7 @@ public class Transakcja {
         return liczbaBiletow;
     }
     public double getDochod() {
-        return dochod;
+        return price;
     }
 
     @Override
@@ -33,6 +33,6 @@ public class Transakcja {
         return  data +
                 " : " + rodzaj.nazwa +
                 " : " + liczbaBiletow +
-                " : " + dochod ;
+                " : " + price ;
     }
 }

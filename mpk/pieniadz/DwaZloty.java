@@ -1,7 +1,7 @@
 package mpk.pieniadz;
 
 public class DwaZloty extends Pieniadz{
-    DwaZloty(){
+    public DwaZloty(){
         wartosc = 2.0;
     }
 }
