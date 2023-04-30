@@ -47,6 +47,18 @@ public class TicketMachine {
         }
     }
 
+    public void buyTicket(Ticket typBiletu, int iloscBiletow, LocalDate data, CreditCard card){
+        double price = typBiletu.price * iloscBiletow;
+        if(card.getAvailableFunds() < price){
+            System.out.println("Not enough cash");
+            return;
+        }
+        else{
+            card.buyWithCard(price);
+            transkacje.add(new Transcation(data,typBiletu,iloscBiletow,price));
+        }
+    }
+
     private void giveChange(double price, double payment){
         ArrayList<Money> change = new ArrayList<>();
         double toChange = payment - price;

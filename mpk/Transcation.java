@@ -3,10 +3,10 @@ package mpk;
 import java.time.LocalDate;
 
 public class Transcation {
-    private LocalDate data;
-    private Ticket rodzaj;
-    private int liczbaBiletow;
-    private double price;
+    private final LocalDate data;
+    private final Ticket rodzaj;
+    private final int liczbaBiletow;
+    private final double price;
 
     public Transcation(LocalDate data, Ticket rodzaj, int liczbaBiletow, double price) {
         this.data = data;
