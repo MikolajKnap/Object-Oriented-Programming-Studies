@@ -1,7 +1,7 @@
 package mpk;
 public enum Ticket {
-    Reduced(20.00, "Normalny"),
-    Regular(30.00,"Ulgowy");
+    Reduced(20.00, "Ulgowy"),
+    Regular(30.00,"Normalny");
     final double price;
     final String name;
     Ticket(double price, String ticketName){

@@ -7,13 +7,19 @@ import java.util.ArrayList;
 
 public class TicketMachine {
 
-    Ticket[] rodzajeBiletow;
-    String lokalizacja;
-    ArrayList<Transcation> transkacje = new ArrayList<>();
+    // Kompozycja z klasa Ticket
+    Ticket[] ticketTypes;
+
+    // Kompozycja z klasa Transaction
+    ArrayList<Transcation> transcations = new ArrayList<>();
+
+    // Kompozycja z klasa Money
     Money[] availableBankNotes;
-    public TicketMachine(String lokalizacja){
-        this.rodzajeBiletow = Ticket.values();
-        this.lokalizacja = lokalizacja;
+
+    String localization;
+    public TicketMachine(String localization){
+        this.ticketTypes = Ticket.values();
+        this.localization = localization;
         this.availableBankNotes = new Money[] {
                 new FiveHundredZloty(),
                 new TwoHundredZloty(),
@@ -27,39 +33,42 @@ public class TicketMachine {
     }
     public void dostepneBilety(){
         System.out.println("Dostepne bilety:");
-        for (Ticket rodzaj:rodzajeBiletow) {
+        for (Ticket rodzaj: ticketTypes) {
             System.out.println(rodzaj);
         }
     }
-    public void buyTicket(Ticket typBiletu, int iloscBiletow, LocalDate data, ArrayList<Money> formaPlatnosci){
-        double price = typBiletu.price * iloscBiletow;
+    public ArrayList<Money> buyTicket(Ticket ticketType, int numberofTickets, LocalDate data, ArrayList<Money> wallet){
+        double price = ticketType.price * numberofTickets;
         double payment = 0;
-        for(Money banknote : formaPlatnosci){
+        for(Money banknote : wallet){
             payment += banknote.getValue();
         }
         if(payment < price){
             System.out.println("Not enough cash");
-            return;
+            return wallet;
         }
         else{
-            transkacje.add(new Transcation(data,typBiletu,iloscBiletow,price));
-            giveChange(price, payment);
+            System.out.println("You bought: " + ticketType + " : " + numberofTickets);
+            ArrayList<Money> change = giveChange(price, payment);
+            transcations.add(new Transcation(data,ticketType,numberofTickets,price));
+            return change;
         }
     }
 
-    public void buyTicket(Ticket typBiletu, int iloscBiletow, LocalDate data, CreditCard card){
-        double price = typBiletu.price * iloscBiletow;
+    public void buyTicket(Ticket ticketType, int numberOfTickets, LocalDate data, CreditCard card){
+        double price = ticketType.price * numberOfTickets;
         if(card.getAvailableFunds() < price){
-            System.out.println("Not enough cash");
+            System.out.println("Not enough funds");
             return;
         }
         else{
+            System.out.println("You bought: " + ticketType + " : " + numberOfTickets);
             card.buyWithCard(price);
-            transkacje.add(new Transcation(data,typBiletu,iloscBiletow,price));
+            transcations.add(new Transcation(data,ticketType,numberOfTickets,price));
         }
     }
 
-    private void giveChange(double price, double payment){
+    private ArrayList<Money> giveChange(double price, double payment){
         ArrayList<Money> change = new ArrayList<>();
         double toChange = payment - price;
 
@@ -74,10 +83,17 @@ public class TicketMachine {
         for (Money bankNote : change){
             System.out.println(bankNote);
         }
+        return change;
     }
-    public void wydrukujTransakcje(LocalDate data){
-        for (Transcation transcation :transkacje) {
+    public void printTransaction(LocalDate data){
+        for (Transcation transcation : transcations) {
             if(transcation.getData().isEqual(data))
+                System.out.println(transcation);
+        }
+    }
+
+    public void printTransaction(){
+        for (Transcation transcation : transcations) {
                 System.out.println(transcation);
         }
     }

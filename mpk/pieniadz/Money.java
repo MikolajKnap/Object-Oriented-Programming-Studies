@@ -1,5 +1,6 @@
 package mpk.pieniadz;
 
+// Po klasie Money dziedzicza wszystkie rodzaje pieniedzy
 public abstract class Money {
     protected double value;
 
